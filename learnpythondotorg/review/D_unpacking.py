@@ -12,7 +12,11 @@ def describe(name, age):
 kwargs = {'name': 'Alice', 'age': 30}
 describe(**kwargs)
 
-# or pack them back up!
+# or pack them back up! 
+        # sidenote:
+        # (using lambda (anonymous) functions)... 
+        # Church used lambda to denote throwaway functions in Lambda calculus 
+        # ex, λx. x + 1
 pack_tuple = lambda *args:args
 packed_tuple = pack_tuple('Noah', 'Sealy')
 print(packed_tuple)
