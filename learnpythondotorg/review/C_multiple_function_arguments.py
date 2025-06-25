@@ -58,3 +58,14 @@ if bar(1, 2, 3, magicnumber=6) == False:
     print("Great.")
 if bar(1, 2, 3, magicnumber=7) == True:
     print("Awesome!")
+
+
+
+# PRACTICE
+args_packer = lambda *args: args
+packed = args_packer('Noah', 'Sealy', 'software')
+print(packed)
+
+kwargs_packer = lambda **kwargs: kwargs
+packed = kwargs_packer(first_name= 'Noah', last_name= 'Sealy')
+print(packed)
