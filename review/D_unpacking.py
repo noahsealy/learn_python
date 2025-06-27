@@ -24,3 +24,11 @@ print(packed_tuple)
 pack = lambda **kwargs: kwargs
 packed_dict = pack(first_name = 'Noah', last_name = 'Sealy')
 print(packed_dict)
+
+args = (3, 4)
+print(*args) #unpack
+print(args)
+
+
+# if you pass in a tuple to *, it will unpack it
+# if you pass in variables to a function with *, it will pack them

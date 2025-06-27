@@ -17,3 +17,9 @@ def lottery():
 
 for random_number in lottery():
        print("And the next number is... %d!" %(random_number))
+
+
+def elements():
+     for i in range(100):
+          yield i
+print(list(elements()))
