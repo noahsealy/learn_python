@@ -6,5 +6,35 @@ Is is sometimes better than == when comparing two instances, especially when che
     Is will return false if the types are not the same, even if their values are.
     == will return true if the types are not the same, but the values are.
 
+Python is both compiled and interpreted.
+The main Python interpretor will compile code to Bytecode, for the Python Virtual Machine that is created in Python
+The PythonVM will then directly interpret instructions from the code and send them to the CPU.
+Compiles bytecode to PythonVM, which interprets that code with CPU.
 
+Before going to bytecode, the code will be represented as an ast. read more...
 
+When you run a python file, you are actually running the python interpretor, 
+    and passing in a filename for it to compile to bytecode
+python3 hello.py
+    python3 calls the interpretor, and tells it to compile the code hello.python
+You can break this down by manually compiling python files, and even using dis to dissassemble and see the bytecode instructions
+
+Every instruction in ByteCode comes in 2 byte units. 
+    First byte is an instruction, and the second is an argument to that instruction.
+    Although older versions might not do this.
+
+CPython uses a stack oriented virtual machine to execute bytecode.
+    The whole bytecode interpretor is built off stacks.
+
+Bytecode can also do math while compiling, in order to simplify functions.
+    Example, multiplying two constant integers together.
+    B/c of this, sometimes it is WAY faster to return a calculated value, rather than storing it into a variable.
+    This is called Constant Folding.
+
+Python has a cache of small integer values. 
+So, similar to None, a variable set to, say, integer 100 is just a reference to a precached integer object.
+Therefore, if you do something like a, b = 100, 100, a is b will return true, as they are both pointing to that same object.
+    Everytime you fetch integer = 100, it is the same object you are fetching
+    This is true in CPython for -5 to 256.
+But c, d = 1000, 1000 will yield c is d as false, as those are not precached integers.
+(is operator assesses not just object equality, but also object identity.)
