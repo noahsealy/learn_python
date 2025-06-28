@@ -1,0 +1,10 @@
+None is a singleton, and any variable that stores None is really just a pointer/reference to None
+    Its type is NoneType
+
+Is is sometimes better than == when comparing two instances, especially when checking for None.
+    This is because is checks not just equality, but also for identity.
+    Is will return false if the types are not the same, even if their values are.
+    == will return true if the types are not the same, but the values are.
+
+
+

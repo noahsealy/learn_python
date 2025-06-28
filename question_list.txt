@@ -1,0 +1,2 @@
+As questions come up, this will act as a ToDo list of things to study.
+Where is None stored?

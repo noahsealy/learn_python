@@ -1,0 +1,39 @@
+This is not my work, it's just notes I've taken from reading the CPython implementation docs.
+
+Memory management in Python involves a private heap containing all Python objects and data structures.
+
+At the lowest level, a raw memory allocator ensures that there is enough room in the private heap for 
+    storing all Python-related data by interacting with the memory manager of the operating system
+
+The management of this private heap is ensured internally by the Python memory manager. 
+The Python memory manager has different components which deal with various dynamic storage management aspects, 
+    like sharing, segmentation, preallocation or caching.
+
+Python has a pymalloc allocator optimized for small objects (smaller or equal to 512 bytes) with a short lifetime. 
+It uses memory mappings called “arenas” with a fixed size of either 256 KiB on 32-bit platforms or 1 MiB on 64-bit platforms
+
+On top of the raw memory allocator, several object-specific allocators operate on the same heap and 
+    implement distinct memory management policies adapted to the peculiarities of every object type.
+    For example, strings and integers are allocated differently.
+    This all occurs within the bounds of the private heap.
+
+It is important to understand that the management of the Python heap is performed by the interpreter 
+    itself and that the user has no control over it, even if they regularly manipulate object pointers to 
+    memory blocks inside that heap. 
+The allocation of heap space for Python objects and other internal buffers is performed on demand 
+    by the Python memory manager through the Python/C API functions
+
+Allocating Domains
+
+All allocating functions belong to one of three different “domains”
+
+1. Raw domain: intended for allocating memory for general-purpose memory buffers 
+    where the allocation must go to the system allocator or where the allocator can operate without the GIL.
+
+2. “Mem” domain: intended for allocating memory for Python buffers and general-purpose memory 
+    buffers where the allocation must be performed with the GIL held. The memory is taken from the Python private heap.
+
+3. Object domain: intended for allocating memory for Python objects. The memory is taken from the Python private heap.
+
+Python has a pymalloc allocator optimized for small objects (smaller or equal to 512 bytes) with a short lifetime. 
+    It uses memory mappings called “arenas” with a fixed size of either 256 KiB on 32-bit platforms or 1 MiB on 64-bit platforms.
