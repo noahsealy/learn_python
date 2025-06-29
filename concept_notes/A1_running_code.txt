@@ -1,0 +1,41 @@
+source_code -> interpreter(compiler -> bytecode -> virtual machine) -> running code
+
+Python is both compiled and interpreted.
+    (Well, this is actually implementation specific)
+    (With CPython, the most common interpreter, source code is compiled to bytecode, then sent to the PythonVM, 
+        which interprets it)
+The main Python interpretor will compile code to Bytecode, for the Python Virtual Machine that is created in Python
+The PythonVM will then directly interpret instructions from the code and send them to the CPU.
+Compiles bytecode to PythonVM, which interprets that code with CPU.
+
+(from reading: https://stackoverflow.com/questions/6889747/is-python-interpreted-or-compiled-or-both)
+The byte code translation is performed to speed execution. 
+Byte code can be run much more quickly than the original source code statements. 
+It has.pyc extension and it will be written if it can write to our machine.
+So, next time we run the same program, Python will load the .pyc file and skip the compilation step unless it's been changed. 
+Python automatically checks the timestamps of source and byte code files to know when it must recompile.
+If we resave the source code, byte code is automatically created again the next time the program is run.
+
+
+(from reading: https://stackoverflow.com/questions/6889747/is-python-interpreted-or-compiled-or-both)
+The byte code translation is performed to speed execution. 
+Byte code can be run much more quickly than the original source code statements. 
+It has.pyc extension and it will be written if it can write to our machine.
+So, next time we run the same program, Python will load the .pyc file and skip the compilation step unless it's been changed. 
+Python automatically checks the timestamps of source and byte code files to know when it must recompile.
+If we resave the source code, byte code is automatically created again the next time the program is run.
+
+Before going to bytecode, the code will be represented as an ast. read more... Abstract Syntax Tree
+
+When you run a python file, you are actually running the python interpretor, 
+    and passing in a filename for it to compile to bytecode
+python3 hello.py
+    python3 calls the interpretor, and tells it to compile the code hello.python
+You can break this down by manually compiling python files, and even using dis to dissassemble and see the bytecode instructions
+
+Every instruction in ByteCode comes in 2 byte units. 
+    First byte is an instruction, and the second is an argument to that instruction.
+    Although older versions might not do this.
+
+CPython uses a stack oriented virtual machine to execute bytecode.
+    The whole bytecode interpretor is built off stacks.
