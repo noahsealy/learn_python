@@ -28,3 +28,28 @@ Python interpreter will allocate hunreds of thousands of objects to run even the
         In turn, all these objects allocate its members, e.g., integers, floats, and strings
     As a Python user, it may be good to be aware of all of these auxiliary allocations, in order to make optimizations
         by avoiding unneeded calls.
+
+Attribute Lookup
+    (It's just all dictionaries)
+    In Python, all instance variables on objects are stored as a regular dictionary. 
+        When working with attributes, you just changing a dictionary.
+
+Inheritence Attribute Lookup
+    Since every Python class implicitly inherits from object, there is always one level of inheritance.
+
+
+List Comprehension vs For Loops
+(https://stackoverflow.com/questions/30245397/why-is-a-list-comprehension-so-much-faster-than-appending-to-a-list)
+List comprehension is basically just a "syntactic sugar" for the regular for loop. 
+    In this case the reason that it performs better is because it doesn't need to load the 
+    append attribute of the list and call it as a function at each iteration. 
+    In other words and in general, list comprehensions perform faster because suspending and 
+    resuming a function's frame, or multiple functions in other cases, is slower than creating a list on demand.
+In [1]: def f1(): 
+   ...:         l = [] 
+   ...:         for i in range(5): 
+   ...:             l.append(i) 
+   ...:     
+   ...:  
+   ...: def f2(): 
+   ...:     [i for i in range(5)] 
