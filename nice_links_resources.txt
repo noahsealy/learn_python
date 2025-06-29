@@ -1,0 +1,6 @@
+https://www.youtube.com/watch?v=tzYhv61piNY
+
+https://leanpub.com/insidethepythonvirtualmachine/read#leanpub-auto-generators-behind-the-scenes
+
+https://devguide.python.org/internals/interpreter/
+
