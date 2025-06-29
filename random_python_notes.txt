@@ -18,3 +18,13 @@ Bytecode can also do math while compiling, in order to simplify functions.
     Example, multiplying two constant integers together.
     B/c of this, sometimes it is WAY faster to return a calculated value, rather than storing it into a variable.
     This is called Constant Folding.
+
+Python interpreter will allocate hunreds of thousands of objects to run even the smallest programs.
+    With all the requests, a Python interpreter running a simple flask application has allocated 847 261 objects in total.
+    Python has a very dynamic nature which comes at a cost. In order to support many features at runtime, 
+        it allocates a lot of auxiliary objects.
+    For example, I found out that a simple function definition allocates at least 
+        five dictionaries, five tuples, and four lists that live until the end of a Python process. 
+        In turn, all these objects allocate its members, e.g., integers, floats, and strings
+    As a Python user, it may be good to be aware of all of these auxiliary allocations, in order to make optimizations
+        by avoiding unneeded calls.

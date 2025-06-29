@@ -1,0 +1,12 @@
+CPython Runtime
+This refers to the entire execution environment provided by the CPython interpreter. It encompasses:
+
+- The PythonVM (interpreter loop)
+- The memory manager
+- The built-in and standard library modules
+- The type system and object model
+- The import system
+- The threading and GIL machinery
+- The C API for extensions
+- The exception system
+- The initialization and teardown logic

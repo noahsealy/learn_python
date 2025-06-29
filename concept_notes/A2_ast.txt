@@ -1,0 +1,2 @@
+Abstract Syntax Trees
+Before going to bytecode, the code will be represented as an ast.

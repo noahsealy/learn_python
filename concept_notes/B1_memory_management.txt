@@ -1,11 +1,18 @@
 This is not my work, it's just notes I've taken from reading the CPython implementation docs.
 
 Memory management in Python involves a private heap containing all Python objects and data structures.
+    Note, this does not include the Python interpreter (compiler + PythonVM)
+        The private Python heap is a memory region that CPython manages for Python objects 
+        (like lists, dicts, user-defined objects, etc.). This heap is managed by the Python 
+        memory manager and is distinct from the general C-level memory of the interpreter.
+        Basically, Python objects live here, but not C implemented utilities.
+Each Python program has it's own private memory heap!
 
 At the lowest level, a raw memory allocator ensures that there is enough room in the private heap for 
     storing all Python-related data by interacting with the memory manager of the operating system
 
-The management of this private heap is ensured internally by the Python memory manager. 
+The management of this private heap is ensured internally by the Python memory manager.
+    It also initializes it...
 The Python memory manager has different components which deal with various dynamic storage management aspects, 
     like sharing, segmentation, preallocation or caching.
 

@@ -1,0 +1,63 @@
+https://rushter.com/blog/python-strings-and-memory/
+
+Python3 uses unicode representations of strings.
+These can take up to 4 bytes. This can be a resource hog.
+
+To save on this space, Python uses three kinds of internal representations for Unicode strings:
+
+1 byte per char (Latin-1 encoding)
+2 bytes per char (UCS-2 encoding)
+4 bytes per char (UCS-4 encoding)
+
+>>> import sys
+>>> string = 'hello'
+>>> sys.getsizeof(string)
+54
+>>> # 1-byte encoding
+>>> sys.getsizeof(string+'!')-sys.getsizeof(string)
+1
+>>> # 2-byte encoding
+>>> string2  = '你'
+>>> sys.getsizeof(string2+'好')-sys.getsizeof(string2)
+2
+>>> sys.getsizeof(string2)
+76
+>>> # 4-byte encoding
+>>> string3 = '🐍'
+>>> sys.getsizeof(string3+'💻')-sys.getsizeof(string3)
+4
+>>> sys.getsizeof(string3)
+80
+
+If all characters in a string can fit in ASCII range, then they are encoded using 1-byte Latin-1 encoding. 
+Basically, Latin-1 represents the first 256 Unicode characters. 
+It supports many Latin languages, such as English, Swedish, Italian, Norwegian and so on. 
+However, it cannot store non-Latin languages, such as Chinese, Japanese, Hebrew, Cyrillic. 
+That is because their codepoints (numerical indexes) defined outside of 1-byte (0-255) range.
+
+Most of the popular natural languages can fit in 2-byte (UCS-2) encoding. 
+The 4-byte (UCS-4) encoding is used when a string contains special symbols, emojis or rare languages.
+
+Fixed Byte Length Encoding as a UTF-8 Alternative
+The most well-known and popular Unicode encoding is UTF-8, but Python doesn't use it internally.
+    Although it is efficient to store, it is inefficient for operations such as indexing strings (string[4])
+        This is because you need to scan the whole string to find the character.
+            Whereas with these fixed byte length encodings, you just take the index and multiply it by the amount of bytes 
+                each character has as the string (1, 2, or 4 bytes)
+
+String interning
+When working with empty strings or ASCII strings of one character Python uses string interning. 
+Interned strings act as singletons, that is, if you have two identical strings that are interned, 
+    there is only one copy of them in the memory.
+
+>>> a = 'hello'
+>>> b = 'world'
+>>> a[4],b[1]
+('o', 'o')
+>>> id(a[4]), id(b[1]), a[4] is b[1]
+(4567926352, 4567926352, True)
+
+Strings that are created during code compilation can also be interned if their length does not exceed 20 characters.
+This can be done because Python strings are immutable.
+
+String interning technique saves tens of thousands of duplicate string allocations.

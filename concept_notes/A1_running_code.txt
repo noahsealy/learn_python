@@ -25,8 +25,6 @@ So, next time we run the same program, Python will load the .pyc file and skip t
 Python automatically checks the timestamps of source and byte code files to know when it must recompile.
 If we resave the source code, byte code is automatically created again the next time the program is run.
 
-Before going to bytecode, the code will be represented as an ast. read more... Abstract Syntax Tree
-
 When you run a python file, you are actually running the python interpretor, 
     and passing in a filename for it to compile to bytecode
 python3 hello.py
