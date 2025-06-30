@@ -1,0 +1,63 @@
+(https://rushter.com/blog/python-garbage-collector/)
+
+In Python, everything is an object — even integers. 
+    Knowing when to allocate them is easy. Python does it when you need to define a new object.
+
+Standard CPython's garbage collector has two components, 
+    the reference counting collector and the generational garbage collector, known as gc module.
+
+The reference counting algorithm is incredibly efficient and straightforward but cannot detect reference cycles.
+
+Reference Counting
+
+Reference counting is a simple technique in which objects are deallocated when there is no reference to them in a program.
+
+(References)
+Every variable in Python is a reference (a pointer) to an object and not the actual value itself.
+For example, the assignment statement just adds a new reference to the right-hand side.
+A single object can have many references (variable names).
+
+a = [1, 2, 3]
+b = a
+
+An assignment statement itself (everything on the left) never copies or creates new data.
+To keep track of references, every object (even integer) has an extra field called reference count 
+    that is increased or decreased when a pointer to the object is created or deleted.
+
+Examples of reference count increases:
+    assignment operator
+    argument passing
+    appending an object to a list (object's reference count will be increased).
+
+
+If the reference counting field reaches zero, CPython automatically calls the object-specific memory deallocation function. 
+    If an object contains references to other objects, then their reference count is automatically decremented, too.
+
+It's important to understand that until your program stays in a block (e.g., function), 
+    the Python interpreter assumes that all variables inside it are in use.
+In Python, the most popular block of code is a function; this is where most of the garbage collection happens. 
+    That is another reason to keep functions small and simple.
+
+Generational Garbage collection
+
+Unfortunately, classical reference counting has a fundamental problem — it cannot detect reference cycles. 
+    A reference cycle occurs when one or more objects are referencing each other.
+
+a = {}
+b = {}
+a.b = b
+b.a = a
+
+The GC classifies container objects into three generations. 
+    Every new object starts in the first generation. 
+    If an object survives a garbage collection round, it moves to the older (higher) generation. 
+    Lower generations are collected more often than higher. 
+
+Cycles can easily happen in real life. Typically, you encounter them in graphs, linked lists,
+    or in structures in which you need to keep track of relations between objects. 
+    If your program has an intensive workload and requires low latency, you need to avoid reference cycles as much as possible.
+
+To avoid circular references in your code, you can use weak references that are implemented in the weakref module. 
+    Unlike the usual references, the weakref.ref doesn't increase the reference count and returns 
+        None if the object was destroyed.
+
