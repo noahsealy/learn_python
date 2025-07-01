@@ -1,0 +1,5 @@
+GIL = Global Interpreter Lock
+
+It prevents more than one thread running at the same time in the interpreter.
+
+It kills the performance of Python.
