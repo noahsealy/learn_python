@@ -2,4 +2,21 @@ GIL = Global Interpreter Lock
 
 It prevents more than one thread running at the same time in the interpreter.
 
-It kills the performance of Python.
+It was introduced in Python 1.5, it's essentially a mutex lock. It is relevant when trying to run bytecode.
+
+It ensures thread safety!
+
+BUT It kills the performance of Python.
+
+Disallows parallel processing.
+
+In most programming languages, multiple threads on the CPU can access the same interpreter.
+BUT Python will only allow one thread to use the processer at the same time.
+The thread can release the lock, and allow another thread to use it, 
+    but then there can still only be one thread using Python at the same time.
+
+Python has a multi-processing module, which allows us to define multiple processes.
+    Each process sort of spawns a new instance of the interpreter for the process to run with.
+    This is a solution to go around the GIL.
+
+In Python 3.13, the GIL is made optional.
