@@ -17,7 +17,6 @@ The thread can release the lock, and allow another thread to use it,
 
 Python has a multi-processing module, which allows us to define multiple processes.
     Each process sort of spawns a new instance of the interpreter for the process to run with.
-    This is a solution to go around the GIL.]
-    
+    This is a solution to go around the GIL.
 
 In Python 3.13, the GIL is made optional.
