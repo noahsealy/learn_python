@@ -1,0 +1,35 @@
+To run code with CPython, CPython has a Reader, a Parser, and a Compiler.
+
+The Reader takes in source code in the forms of file inputs, IO Stream inputs, or String inputs.
+The reader will translate the code it is passed into a module, to be parsed by the parser. 
+    Once parsed by the parser, it is sent to the compiler. This translation step exists because the compiler needs to 
+        have the code in a structure that it can read.
+
+Even before that, there are runtime build configurations that involve the following steps:
+    System configuration, command line arguments, and environment variables
+    PyPreConfig
+    PyConfig
+    Runtime
+
+There are various ways for the reader to take in code as input, such as as a module, as text, and as Bytecode
+
+./python -c "print(2 ** 2)"
+An example of CPython running code from an input string, is that pymain_run_command() will be called from Modules->main.c
+    The command passed in as -c is taken in as an argument in the C type wchar_t*
+    pymain_run_command() passes the Python bytes object to PyRun_SimpleStringFlags() in Python->pythonrun.c
+    A Python module needs to have an entry point of __main__, to be executed as a module.
+    PyRun_SimpleStringFlags() creates this entry point for this string.
+    A fake filename in PyRun_SimpleStringFlags() is then created for our new module, so it can then be sent to the parser.
+
+For a filename passed to ./python,
+    Python->pythonrun.c's PyRun_SimpleFileExFlags() will handle it.
+    It is either processed as bytecode (.pyc), as a script file (.py), or as stdin.
+    All of these have similar functions, where they take the specific type and prepare it for the parser.
+
+For a bytecode file, .pyc
+    Instead of loading a plain text file and parsing it, CPython assumes that the 
+        .pyc file contains a code object written to disk
+    The code is copied to memory and converted to a specific data structure (Marshalling)
+    The code object data structure on disk is the CPython compiler's way to cache compiled code.
+        , so it doesn't need to parse code every time a script is called.
+    Once the code object is marshalled to memory, it's sent to be executed.

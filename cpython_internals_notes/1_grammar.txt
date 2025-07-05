@@ -1,0 +1,1 @@
+CPython compiled Python code follows a grammar that can be changed in CPython's code
