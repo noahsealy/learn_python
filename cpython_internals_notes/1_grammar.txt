@@ -1,1 +1,20 @@
 CPython compiled Python code follows a grammar that can be changed in CPython's code
+
+Grammar's can be represented as "railroad" diagrams, where a valid statement must follow one of these diagrams completly.
+    Pages 71-73 for examples to follow along.
+In CPython, they're actually coded for a parser to read as a parsing expression grammar (PEG)
+    Page 70
+
+The CPython compiler never directly uses the grammar file, instead a parser generator
+    reads this file and generates a parser.
+    This is why you must regenerate the parser and recompile CPython if you make changes to the grammar,
+        as the parser needs to pull in the new grammar rules.
+
+You can regenerate the grammar by rebuilding the grammar files.
+make regen-pegen
+
+This grammar for CPython can be found in Grammar->python.gram, as is used to specify the keywords and reserved words that
+    make up Python syntax as we know it.
+
+This is how the parser knows how to understand Python! It is all mapped out to various real Python functions under the hood.
+
